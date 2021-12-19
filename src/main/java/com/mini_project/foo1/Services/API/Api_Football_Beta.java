@@ -89,7 +89,7 @@ public class Api_Football_Beta {
         //Construction des parametres
         Map<String,String> params=new HashMap<>();
         if(name!=null) params.put("name",name);
-        if(search!=null) params.put("search",search);
+        if(search!=null) params.put("search",search.replaceAll(" ","%20"));
         if(id!=null) params.put("id",id);
         if(country!=null) params.put("country",country);
         if(season!=null) params.put("season",season);
