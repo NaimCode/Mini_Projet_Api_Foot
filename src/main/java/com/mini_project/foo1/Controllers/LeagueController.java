@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/{lang}/ligues")
+@CrossOrigin
 public class LeagueController {
      private final Api_Football_Beta api_football_beta=new Api_Football_Beta();
     private final Api_Football_Beta cheap_translate=new Api_Football_Beta();

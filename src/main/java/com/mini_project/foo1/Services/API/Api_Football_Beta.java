@@ -1,7 +1,5 @@
 package com.mini_project.foo1.Services.API;
-import com.mini_project.foo1.Models.Country;
-import com.mini_project.foo1.Models.League;
-import com.mini_project.foo1.Models.Team;
+import com.mini_project.foo1.Models.*;
 import com.mini_project.foo1.Services.Utils.Convertion;
 
 import java.io.IOException;
@@ -70,7 +68,7 @@ public class Api_Football_Beta {
         //Construction des parametres
         Map<String,String> params=new HashMap<>();
         if(name!=null) params.put("name",name);
-        if(search!=null) params.put("search",search);
+        if(search!=null) params.put("search",search.replaceAll(" ","%20"));
         if(id!=null) params.put("id",id);
         if(country!=null) params.put("country",country);
         if(season!=null) params.put("season",season);
@@ -84,6 +82,22 @@ public class Api_Football_Beta {
         return teams;
     }
 
+    //TeamStatistique
+    public List<Team_statistique> getTeamStatistique(String team, String season, String league){
+        //Construction des parametres
+        Map<String,String> params=new HashMap<>();
+
+        if(season!=null) params.put("season",season);
+        if(team!=null) params.put("team",team);
+        if(league!=null) params.put("league",league);
+
+        List<Team_statistique> team_statistiques=new ArrayList<>();
+        convertion.toJson(request("teams/statistics",convertion.toString(params)))
+                .get("response")
+                .elements().
+                forEachRemaining(json->team_statistiques.add(new Team_statistique(json)));
+        return team_statistiques;
+    }
     //Leagues
     public List<League> getLeagues(String id,String name,String search,String country, String season,String type, String current,String team){
         //Construction des parametres
@@ -105,4 +119,27 @@ public class Api_Football_Beta {
         return leagues;
     }
 
+    //Fixtures
+    public List<Fixture> getFixtures(String id, String status, String from, String to, String date, String live, String last, String round, String season, String league, String team){
+        //Construction des parametres
+        Map<String,String> params=new HashMap<>();
+        if(status!=null) params.put("status",status);
+        if(from!=null) params.put("from",from);
+        if(id!=null) params.put("id",id);
+        if(to!=null) params.put("to",to);
+        if(season!=null) params.put("season",season);
+        if(team!=null) params.put("team",team);
+        if(league!=null) params.put("league",league);
+        if(date!=null) params.put("date",date);
+        if(live!=null) params.put("live",live);
+        if(round!=null) params.put("round",round);
+        if(last!=null) params.put("last",last);
+
+        List<Fixture> fixtures=new ArrayList<>();
+        convertion.toJson(request("fixtures",convertion.toString(params)))
+                .get("response")
+                .elements().
+                forEachRemaining(json->fixtures.add(new Fixture(json)));
+        return fixtures;
+    }
 }

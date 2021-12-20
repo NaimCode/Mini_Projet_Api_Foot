@@ -6,6 +6,15 @@ public class Team_v1 {
     protected int id;
     protected String name;
     protected String logo;
+    protected Boolean winner;
+
+    public Boolean getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Boolean winner) {
+        this.winner = winner;
+    }
 
     public Team_v1(int id, String name, String logo) {
         this.id = id;
@@ -14,8 +23,10 @@ public class Team_v1 {
     }
     public Team_v1(JsonNode json) {
         this.id = json.get("id").asInt();
-        this.name = json.get("name").asText();;
-        this.logo = json.get("logo").asText();;
+        this.name = json.get("name").asText();
+        this.logo = json.get("logo").asText();
+        if(json.get("winner")!=null)
+            this.winner=json.get("winner").asBoolean();
     }
 
 
