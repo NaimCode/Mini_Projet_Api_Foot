@@ -13,7 +13,6 @@ import java.util.List;
 @CrossOrigin
 public class LeagueController {
      private final Api_Football_Beta api_football_beta=new Api_Football_Beta();
-    private final Api_Football_Beta cheap_translate=new Api_Football_Beta();
 
 
     @GetMapping

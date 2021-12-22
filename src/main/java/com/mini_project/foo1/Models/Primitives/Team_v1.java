@@ -22,8 +22,11 @@ public class Team_v1 {
         this.logo = logo;
     }
     public Team_v1(JsonNode json) {
+        if(json.get("id")!=null)
         this.id = json.get("id").asInt();
+        if(json.get("name")!=null)
         this.name = json.get("name").asText();
+        if(json.get("logo")!=null)
         this.logo = json.get("logo").asText();
         if(json.get("winner")!=null)
             this.winner=json.get("winner").asBoolean();

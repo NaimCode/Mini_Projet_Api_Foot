@@ -98,6 +98,22 @@ public class Api_Football_Beta {
                 forEachRemaining(json->team_statistiques.add(new Team_statistique(json)));
         return team_statistiques;
     }
+    //Coach
+    public List<Coach> getCoach(String id,String team,String search){
+        //Construction des parametres
+        Map<String,String> params=new HashMap<>();
+
+        if(search!=null) params.put("search",search);
+        if(team!=null) params.put("team",team);
+        if(id!=null) params.put("id",id);
+
+        List<Coach> coaches=new ArrayList<>();
+        convertion.toJson(request("coachs",convertion.toString(params)))
+                .get("response")
+                .elements().
+                forEachRemaining(json->coaches.add(new Coach(json)));
+        return coaches;
+    }
     //Leagues
     public List<League> getLeagues(String id,String name,String search,String country, String season,String type, String current,String team){
         //Construction des parametres

@@ -16,14 +16,6 @@ public class Fixture {
     private int fullTime;
     private String date;
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     private int venueID;
     //Besoinn de traduction
     private String status;
@@ -33,6 +25,14 @@ public class Fixture {
     private Team_v1 awayTeam;
     private int homeGoal;
     private int awayGoal;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public Fixture(int id, String referee,
                    int timestamp,
@@ -56,11 +56,16 @@ public class Fixture {
         this.awayGoal = awayGoal;
     }
     public Fixture(JsonNode json) {
+        if(json.get("fixture").get("id")!=null)
         this.id = json.get("fixture").get("id").asInt();
+        if(json.get("fixture").get("referee")!=null)
         this.referee = json.get("fixture").get("referee").asText();
         this.date = json.get("fixture").get("date").asText();
+        if(json.get("fixture").get("timestamp")!=null)
         this.timestamp = json.get("fixture").get("timestamp").asInt();
+        if(json.get("fixture").get("periods").get("first")!=null)
         this.halfTime = json.get("fixture").get("periods").get("first").asInt();
+        if(json.get("fixture").get("periods").get("second")!=null)
         this.fullTime =  json.get("fixture").get("periods").get("second").asInt();
         this.venueID =json.get("fixture").get("venue").get("id").asInt();
         this.status = json.get("fixture").get("status").get("long").asText();
