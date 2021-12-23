@@ -19,14 +19,22 @@ public class FixtureLineup {
         this.substitutes = substitutes;
     }
     public FixtureLineup(JsonNode json) {
+        if(json.get("coach")!=null)
         this.coach = new Coach(json.get("coach"));
+
+        if(json.get("formation")!=null)
         this.formation = json.get("formation").asText();
-        List<Player> players=new ArrayList<>();
-        json.get("startIX").elements().forEachRemaining(jsonNode -> players.add(new Player(jsonNode.get("player"))));
-        this.startIX = players;
+        List<Player> players = new ArrayList<>();
+        if(json.get("startIX")!=null) {
+
+            json.get("startIX").elements().forEachRemaining(jsonNode -> players.add(new Player(jsonNode.get("player"))));
+            this.startIX = players;
+        }
         players.clear();
+
+        if( json.get("substitutes")!=null){
         json.get("substitutes").elements().forEachRemaining(jsonNode -> players.add(new Player(jsonNode.get("player"))));
-        this.substitutes = players;
+        this.substitutes = players;}
     }
 
     public Coach getCoach() {

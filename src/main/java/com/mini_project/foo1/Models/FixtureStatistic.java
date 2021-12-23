@@ -5,20 +5,19 @@ import com.mini_project.foo1.Models.Primitives.FixtureLineup;
 import com.mini_project.foo1.Models.Primitives.FixtureStatistic_v1;
 import com.mini_project.foo1.Models.Primitives.Venue;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FixtureStatistic {
     private List<FixtureStatistic_v1> fixtureStatistic_v1s;
     private Venue venue;
-    private FixtureLineup fixtureLineup;
-    private FixtureEvent fixtureEvent;
+    private List<FixtureLineup> fixtureLineups;
+    private List<FixtureEvent> fixtureEvents;
 
-    public FixtureStatistic(List<FixtureStatistic_v1> fixtureStatistic_v1s, Venue venue, FixtureLineup fixtureLineup, FixtureEvent fixtureEvent) {
+    public FixtureStatistic(List<FixtureStatistic_v1> fixtureStatistic_v1s, Venue venue, List<FixtureLineup> fixtureLineups, List<FixtureEvent> fixtureEvents) {
         this.fixtureStatistic_v1s = fixtureStatistic_v1s;
         this.venue = venue;
-        this.fixtureLineup = fixtureLineup;
-        this.fixtureEvent = fixtureEvent;
+        this.fixtureLineups = fixtureLineups;
+        this.fixtureEvents = fixtureEvents;
     }
 
     public List<FixtureStatistic_v1> getFixtureStatistic_v1s() {
@@ -37,19 +36,19 @@ public class FixtureStatistic {
         this.venue = venue;
     }
 
-    public FixtureLineup getFixtureLineup() {
-        return fixtureLineup;
+    public List<FixtureLineup> getFixtureLineups() {
+        return fixtureLineups;
     }
 
-    public void setFixtureLineup(FixtureLineup fixtureLineup) {
-        this.fixtureLineup = fixtureLineup;
+    public void setFixtureLineups(List<FixtureLineup> fixtureLineups) {
+        this.fixtureLineups = fixtureLineups;
     }
 
-    public FixtureEvent getFixtureEvent() {
-        return fixtureEvent;
+    public List<FixtureEvent> getFixtureEvents() {
+        return fixtureEvents;
     }
 
-    public void setFixtureEvent(FixtureEvent fixtureEvent) {
-        this.fixtureEvent = fixtureEvent;
+    public void setFixtureEvents(List<FixtureEvent> fixtureEvents) {
+        this.fixtureEvents = fixtureEvents;
     }
 }

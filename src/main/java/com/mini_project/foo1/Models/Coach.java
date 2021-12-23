@@ -75,15 +75,18 @@ public class Coach {
         this.weight = json.get("weight").asText();
         if(json.get("photo")!=null)
         this.photo = json.get("photo").asText();
-        if(json.get("birth").get("date")!=null)
-        this.dateNaissance =  json.get("birth").get("date").asText();
-        if(json.get("birth").get("place")!=null)
-        this.lieuNaissance =  json.get("birth").get("place").asText();
+        if(json.get("birth")!=null) {
+            if (json.get("birth").get("date") != null)
+                this.dateNaissance = json.get("birth").get("date").asText();
+            if (json.get("birth").get("place") != null)
+                this.lieuNaissance = json.get("birth").get("place").asText();
+        }
         if(json.get("team")!=null)
         this.team = new Team_v1(json.get("team"));
+        if(json.get("career")!=null){
         List<Career> careers=new ArrayList<>();
         json.get("career").elements().forEachRemaining(jsonNode -> careers.add(new Career(jsonNode)));
-        this.careers = careers;
+        this.careers = careers;}
     }
 
     public int getId() {

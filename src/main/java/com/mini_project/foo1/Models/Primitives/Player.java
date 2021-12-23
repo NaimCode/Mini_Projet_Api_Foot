@@ -19,9 +19,13 @@ public class Player {
     }
     public Player(JsonNode json) {
         this.id = json.get("id").asInt();
+        if(json.get("name")!=null)
         this.name = json.get("name").asText();
+        if(json.get("number")!=null)
         this.number = json.get("number").asInt();
+        if(json.get("pos")!=null)
         this.pos = json.get("pos").asText();
+        if(json.get("grid")!=null)
         this.grid = json.get("grid").asText();
     }
 

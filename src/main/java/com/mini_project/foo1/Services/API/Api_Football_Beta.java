@@ -1,5 +1,9 @@
 package com.mini_project.foo1.Services.API;
 import com.mini_project.foo1.Models.*;
+import com.mini_project.foo1.Models.Primitives.FixtureEvent;
+import com.mini_project.foo1.Models.Primitives.FixtureLineup;
+import com.mini_project.foo1.Models.Primitives.FixtureStatistic_v1;
+import com.mini_project.foo1.Models.Primitives.Venue;
 import com.mini_project.foo1.Services.Utils.Convertion;
 
 import java.io.IOException;
@@ -157,5 +161,60 @@ public class Api_Football_Beta {
                 .elements().
                 forEachRemaining(json->fixtures.add(new Fixture(json)));
         return fixtures;
+    }
+    //FixtureStatistics
+    public FixtureStatistic getFixtureStatistic(String id,String venueID) throws InterruptedException {
+
+
+        List<Venue> venue=new ArrayList<>();
+        List<FixtureEvent> fixtureEvents=new ArrayList<>();
+        List<FixtureStatistic_v1> fixtureStatistic_v1s=new ArrayList<>();
+        List<FixtureLineup> fixtureLineups=new ArrayList<>();
+
+        Runnable runnable=()->{
+
+        convertion.toJson(request("fixtures/events","?fixture="+id))
+                .get("response")
+                .elements().
+                forEachRemaining(json->fixtureEvents.add(new FixtureEvent(json)));
+
+
+
+        };  Runnable runnable2=()->{
+            convertion.toJson(request("fixtures/lineups","?fixture="+id))
+                    .get("response")
+                    .elements().
+                    forEachRemaining(json->fixtureLineups.add(new FixtureLineup(json)));
+
+        };  Runnable runnable4=()->{
+            convertion.toJson(request("fixtures/statistics","?fixture="+id))
+                    .get("response")
+                    .elements().
+                    forEachRemaining(json->fixtureStatistic_v1s.add(new FixtureStatistic_v1(json)));
+
+        };
+        Runnable runnable3=()->{
+            convertion.toJson(request("venues","?id="+venueID))
+                    .get("response")
+                    .elements().
+                    forEachRemaining(json->venue.add(new Venue(json)));
+
+        };
+        Thread thread1=new Thread(runnable);
+        Thread thread2=new Thread(runnable2);
+        Thread thread3=new Thread(runnable3);
+        Thread thread4=new Thread(runnable4);
+
+
+        List<Thread> threads=new ArrayList<>();
+        threads.add(thread1); threads.add(thread2); threads.add(thread3); threads.add(thread4);
+        for (Thread thread : threads) {
+            thread.start();
+            thread.join();
+        }
+
+        return new FixtureStatistic(fixtureStatistic_v1s,venue.get(0),fixtureLineups,fixtureEvents);
+
+
     }
 }
