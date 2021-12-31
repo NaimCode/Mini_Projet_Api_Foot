@@ -28,6 +28,7 @@ public class League_v2 extends League_v1{
     public League_v2(JsonNode json) {
         super(json);
         this.season = json.get("season").asInt();
+        if(json.get("country")!=null)
         this.country = json.get("country").asText();
         this.flag = json.get("flag").asText();
         if(json.get("round")!=null)

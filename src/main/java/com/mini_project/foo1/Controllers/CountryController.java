@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/{lang}/pays")
+@CrossOrigin
 public class CountryController {
     private final Api_Football_Beta api_football_beta=new Api_Football_Beta();
     private final Cheap_Translate cheap_translate=new Cheap_Translate();
@@ -17,10 +18,11 @@ public class CountryController {
     @GetMapping
     public List<Country> getCountries(@PathVariable String lang,
                               @RequestParam(required = false) String search,
+                                      @RequestParam(required = false) String code,
                               @RequestParam(required = false) String name ){
 
         final String[] textATraduire = {""};
-        List<Country> countries=api_football_beta.getCountries(name,search);
+        List<Country> countries=api_football_beta.getCountries(name,search,code);
 
         countries.forEach(c-> textATraduire[0] +=c.getName()+"|");
 

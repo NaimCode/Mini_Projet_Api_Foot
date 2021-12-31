@@ -1,9 +1,7 @@
 package com.mini_project.foo1.Services.API;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.mini_project.foo1.Models.*;
-import com.mini_project.foo1.Models.Primitives.FixtureEvent;
-import com.mini_project.foo1.Models.Primitives.FixtureLineup;
-import com.mini_project.foo1.Models.Primitives.FixtureStatistic_v1;
-import com.mini_project.foo1.Models.Primitives.Venue;
+import com.mini_project.foo1.Models.Primitives.*;
 import com.mini_project.foo1.Services.Utils.Convertion;
 
 import java.io.IOException;
@@ -19,7 +17,7 @@ import java.util.Map;
 public class Api_Football_Beta {
 
     //Informations utiles que nous allons les utiliser dans nos appels
-    private final String key="ee61458eeemsh49db22f0a6b3aa8p146ab4jsn92d4b24bd4a0";
+    private final String key="7a993e4f8emshb10196fe71115b3p11e37bjsn7c10e43834bb";//"ee61458eeemsh49db22f0a6b3aa8p146ab4jsn92d4b24bd4a0";//"5c68e4155bmshacdd4ece7352afep11f7cfjsn80d476d01f78";//"d560e412ffmsh2e521a76f1abf27p126933jsn18a435ec2b29";// ""7a993e4f8emshb10196fe71115b3p11e37bjsn7c10e43834bb"; //"ee61458eeemsh49db22f0a6b3aa8p146ab4jsn92d4b24bd4a0";
     private final String apiUrl="https://api-football-beta.p.rapidapi.com/";
     private final String host="api-football-beta.p.rapidapi.com";
     ///
@@ -55,14 +53,17 @@ public class Api_Football_Beta {
     //////////////////////////////////
 
     ///Country
-    public List<Country> getCountries(String name,String search){
+    public List<Country> getCountries(String name,String search,String code){
         //Construction des parametres
         Map<String,String> params=new HashMap<>();
         if(name!=null) params.put("name",name);
         if(search!=null) params.put("search",search);
+        if(code!=null) params.put("code",code);
 
         List<Country> countries=new ArrayList<>();
-        convertion.toJson(request("countries",convertion.toString(params))).get("response").elements().forEachRemaining(json->countries.add(new Country(json)));
+        String requet=request("countries",convertion.toString(params));
+        JsonNode jsonNode=convertion.toJson(requet);
+        jsonNode.get("response").elements().forEachRemaining(json->countries.add(new Country(json)));
         return countries;
     }
 
@@ -87,7 +88,7 @@ public class Api_Football_Beta {
     }
 
     //TeamStatistique
-    public List<Team_statistique> getTeamStatistique(String team, String season, String league){
+    public Team_statistique getTeamStatistique(String team, String season, String league){
         //Construction des parametres
         Map<String,String> params=new HashMap<>();
 
@@ -95,18 +96,31 @@ public class Api_Football_Beta {
         if(team!=null) params.put("team",team);
         if(league!=null) params.put("league",league);
 
-        List<Team_statistique> team_statistiques=new ArrayList<>();
-        convertion.toJson(request("teams/statistics",convertion.toString(params)))
-                .get("response")
-                .elements().
-                forEachRemaining(json->team_statistiques.add(new Team_statistique(json)));
-        return team_statistiques;
+        return new Team_statistique(convertion.toJson(request("teams/statistics",convertion.toString(params)))
+                .get("response"));
     }
+
+    //TeamStatistique
+    public PlayerPagination getPlayers(String team, String season, String league,String id,String page){
+        //Construction des parametres
+        Map<String,String> params=new HashMap<>();
+
+        if(season!=null) params.put("season",season);
+        if(team!=null) params.put("team",team);
+        if(league!=null) params.put("league",league);
+        if(id!=null) params.put("id",id);
+        if(league!=null) params.put("league",league);
+        if(page!=null) params.put("page",page);
+List<Player> players=new ArrayList<>();
+JsonNode json=convertion.toJson(request("players",convertion.toString(params)));
+json.get("response").elements().forEachRemaining(jsonNode -> players.add(new Player(jsonNode.get("player"))));
+
+return new PlayerPagination(players,json.get("paging").get("total").asInt());
+  }
     //Coach
     public List<Coach> getCoach(String id,String team,String search){
         //Construction des parametres
         Map<String,String> params=new HashMap<>();
-
         if(search!=null) params.put("search",search);
         if(team!=null) params.put("team",team);
         if(id!=null) params.put("id",id);
@@ -193,28 +207,45 @@ public class Api_Football_Beta {
                     forEachRemaining(json->fixtureStatistic_v1s.add(new FixtureStatistic_v1(json)));
 
         };
-        Runnable runnable3=()->{
-            convertion.toJson(request("venues","?id="+venueID))
-                    .get("response")
-                    .elements().
-                    forEachRemaining(json->venue.add(new Venue(json)));
-
-        };
+//        Runnable runnable3=()->{
+//            convertion.toJson(request("venues","?id="+venueID))
+//                    .get("response")
+//                    .elements().
+//                    forEachRemaining(json->venue.add(new Venue(json)));
+//
+//        };
         Thread thread1=new Thread(runnable);
         Thread thread2=new Thread(runnable2);
-        Thread thread3=new Thread(runnable3);
+       // Thread thread3=new Thread(runnable3);
         Thread thread4=new Thread(runnable4);
 
 
         List<Thread> threads=new ArrayList<>();
-        threads.add(thread1); threads.add(thread2); threads.add(thread3); threads.add(thread4);
+        threads.add(thread1); threads.add(thread2);/* threads.add(thread3)*/; threads.add(thread4);
         for (Thread thread : threads) {
             thread.start();
             thread.join();
         }
 
-        return new FixtureStatistic(fixtureStatistic_v1s,venue.get(0),fixtureLineups,fixtureEvents);
+        return new FixtureStatistic(fixtureStatistic_v1s,fixtureLineups,fixtureEvents);
 
 
     }
+    //Standing
+    public Standing  getStanding(String team,String season,String league){
+        //Construction des parametres
+        Map<String,String> params=new HashMap<>();
+
+        if(season!=null) params.put("season",season);
+        if(team!=null) params.put("team",team);
+        if(league!=null) params.put("league",league);
+
+
+
+
+        return new Standing(convertion.toJson(request("standings",convertion.toString(params)))
+                .get("response").get(0));
+    }
+
+
 }

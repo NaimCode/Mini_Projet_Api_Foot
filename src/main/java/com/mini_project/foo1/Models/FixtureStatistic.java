@@ -9,13 +9,13 @@ import java.util.List;
 
 public class FixtureStatistic {
     private List<FixtureStatistic_v1> fixtureStatistic_v1s;
-    private Venue venue;
+    private Venue venue=null;
     private List<FixtureLineup> fixtureLineups;
     private List<FixtureEvent> fixtureEvents;
 
-    public FixtureStatistic(List<FixtureStatistic_v1> fixtureStatistic_v1s, Venue venue, List<FixtureLineup> fixtureLineups, List<FixtureEvent> fixtureEvents) {
+    public FixtureStatistic(List<FixtureStatistic_v1> fixtureStatistic_v1s, List<FixtureLineup> fixtureLineups, List<FixtureEvent> fixtureEvents) {
         this.fixtureStatistic_v1s = fixtureStatistic_v1s;
-        this.venue = venue;
+
         this.fixtureLineups = fixtureLineups;
         this.fixtureEvents = fixtureEvents;
     }

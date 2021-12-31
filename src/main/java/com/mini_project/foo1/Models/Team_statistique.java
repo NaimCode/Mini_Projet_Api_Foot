@@ -21,15 +21,22 @@ public class Team_statistique {
         this.goal = goal;
         this.fixture_v1 = fixture_v1;
         this.lineup = lineup;
-    }public Team_statistique(JsonNode json) {
+    }
+    public Team_statistique(JsonNode json) {
+        if(json.get("league")!=null)
         this.league_v2 = new League_v2(json.get("league"));
+        if(json.get("form")!=null)
         this.form = json.get("form").asText();
+        if(json.get("team")!=null)
         this.team_v1 = new Team_v1(json.get("team"));
+        if(json.get("goals")!=null)
         this.goal = new Goal(json.get("goals"));
+        if(json.get("fixtures")!=null)
         this.fixture_v1 =new Fixture_v1(json.get("fixtures"));
+        if(json.get("lineups")!=null){
         List<Lineup> lineups= new ArrayList<>();
                 json.get("lineups").elements().forEachRemaining(jsonNode -> lineups.add(new Lineup(jsonNode)));
-        this.lineup =lineups;
+        this.lineup =lineups;}
 
     }
 

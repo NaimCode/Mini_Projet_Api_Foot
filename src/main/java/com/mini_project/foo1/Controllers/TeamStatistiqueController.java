@@ -15,7 +15,7 @@ public class TeamStatistiqueController {
 
 
     @GetMapping
-    public List<Team_statistique> getTeams(@PathVariable String lang,
+    public Team_statistique getTeams(@PathVariable String lang,
                                            @RequestParam() String team,
                                            @RequestParam() String season,
                                            @RequestParam() String league){

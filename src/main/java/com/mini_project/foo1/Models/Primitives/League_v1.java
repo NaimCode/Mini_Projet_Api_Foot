@@ -18,10 +18,12 @@ public class League_v1 {
     //
     public League_v1(JsonNode json) {
         this.id = json.get("id").asInt();
+        if(json.get("name")!=null)
         this.name = json.get("name").asText();
         if(json.get("type")!=null) {
             this.type = json.get("type").asText();
         }
+        if(json.get("logo")!=null)
         this.logo = json.get("logo").asText();
     }
 

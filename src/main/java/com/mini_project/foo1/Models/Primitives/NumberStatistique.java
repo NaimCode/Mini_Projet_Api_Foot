@@ -14,6 +14,7 @@ public class NumberStatistique {
         this.total = total;
     }
     public NumberStatistique(JsonNode json) {
+        if(json.get("home")!=null)
         this.home = json.get("home").asInt();
         this.away = json.get("away").asInt();
         this.total = json.get("total").asInt();

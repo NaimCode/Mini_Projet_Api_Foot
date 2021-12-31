@@ -16,7 +16,7 @@ public class CoachController {
     private final Cheap_Translate cheap_translate=new Cheap_Translate();
 
     @GetMapping
-    public List<Coach> getTeams(@PathVariable String lang,
+    public  List<Coach> getTeams(@PathVariable String lang,
                                 @RequestParam(required = false) String search,
                                 @RequestParam(required = false) String team,
                                 @RequestParam(required = false) String id ){

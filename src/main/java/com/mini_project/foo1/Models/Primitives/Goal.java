@@ -11,7 +11,9 @@ public class Goal {
         this.forr = forr;
     }
     public Goal(JsonNode json) {
+        if(json.get("against")!=null && json.get("against").get("total")!=null)
         this.against = new NumberStatistique(json.get("against").get("total"));
+        if(json.get("for")!=null && json.get("against").get("total")!=null)
         this.forr = new NumberStatistique(json.get("for").get("total"));;
     }
 
