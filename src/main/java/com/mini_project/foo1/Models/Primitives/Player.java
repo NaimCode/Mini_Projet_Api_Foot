@@ -15,8 +15,36 @@ public class Player {
     private int age;
     private String nationality;
     private String photo;
+    private String height;
+    private String weight;
 
-    public Player(int id, String name, int number, String pos, String grid, String firstname, String lastname, int age, String nationality, String photo) {
+    private String dateNaissance;
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public String getDateNaissance() {
+        return dateNaissance;
+    }
+
+    public void setDateNaissance(String dateNaissance) {
+        this.dateNaissance = dateNaissance;
+    }
+
+    public Player(int id, String name, int number, String pos, String grid, String firstname, String lastname, int age, String nationality, String photo, String height, String weight, String dateNaissance) {
         this.id = id;
         this.name = name;
         this.number = number;
@@ -27,6 +55,9 @@ public class Player {
         this.age = age;
         this.nationality = nationality;
         this.photo = photo;
+        this.height = height;
+        this.weight = weight;
+        this.dateNaissance = dateNaissance;
     }
 
     public Player(@NotNull JsonNode json) {
@@ -41,6 +72,12 @@ public class Player {
             this.photo = json.get("photo").asText();
         if(json.get("nationality")!=null)
             this.nationality = json.get("nationality").asText();
+        if(json.get("height")!=null)
+            this.height = json.get("height").asText();
+        if(json.get("weight")!=null)
+            this.weight = json.get("weight").asText();
+        if(json.get("birth")!=null)
+            this.dateNaissance = json.get("birth").get("date").asText();
         if(json.get("age")!=null)
             this.age = json.get("age").asInt();
         if(json.get("number")!=null)

@@ -17,7 +17,7 @@ import java.util.Map;
 public class Api_Football_Beta {
 
     //Informations utiles que nous allons les utiliser dans nos appels
-    private final String key="7a993e4f8emshb10196fe71115b3p11e37bjsn7c10e43834bb";//"ee61458eeemsh49db22f0a6b3aa8p146ab4jsn92d4b24bd4a0";//"5c68e4155bmshacdd4ece7352afep11f7cfjsn80d476d01f78";//"d560e412ffmsh2e521a76f1abf27p126933jsn18a435ec2b29";// ""7a993e4f8emshb10196fe71115b3p11e37bjsn7c10e43834bb"; //"ee61458eeemsh49db22f0a6b3aa8p146ab4jsn92d4b24bd4a0";
+    private final String key="ee61458eeemsh49db22f0a6b3aa8p146ab4jsn92d4b24bd4a0";//"ee61458eeemsh49db22f0a6b3aa8p146ab4jsn92d4b24bd4a0";//"5c68e4155bmshacdd4ece7352afep11f7cfjsn80d476d01f78";//"d560e412ffmsh2e521a76f1abf27p126933jsn18a435ec2b29";// ""7a993e4f8emshb10196fe71115b3p11e37bjsn7c10e43834bb"; //"ee61458eeemsh49db22f0a6b3aa8p146ab4jsn92d4b24bd4a0";
     private final String apiUrl="https://api-football-beta.p.rapidapi.com/";
     private final String host="api-football-beta.p.rapidapi.com";
     ///
@@ -86,6 +86,37 @@ public class Api_Football_Beta {
                 forEachRemaining(json->teams.add(new Team(json)));
         return teams;
     }
+    //Trophie
+    public List<Trophie> getTrophie(String coach,String player){
+        //Construction des parametres
+        Map<String,String> params=new HashMap<>();
+        if(coach!=null) params.put("coach",coach);
+        if(player!=null) params.put("player",player);
+
+
+        List<Trophie> teams=new ArrayList<>();
+        convertion.toJson(request("trophies",convertion.toString(params)))
+                .get("response")
+                .elements().
+                forEachRemaining(json->teams.add(new Trophie(json)));
+        return teams;
+    }
+
+    //Sidelined
+    public List<Sidelined> getSidelined(String coach,String player){
+        //Construction des parametres
+        Map<String,String> params=new HashMap<>();
+        if(coach!=null) params.put("coach",coach);
+        if(player!=null) params.put("player",player);
+
+
+        List<Sidelined> teams=new ArrayList<>();
+        convertion.toJson(request("sidelined",convertion.toString(params)))
+                .get("response")
+                .elements().
+                forEachRemaining(json->teams.add(new Sidelined(json)));
+        return teams;
+    }
 
     //TeamStatistique
     public Team_statistique getTeamStatistique(String team, String season, String league){
@@ -130,6 +161,22 @@ return new PlayerPagination(players,json.get("paging").get("total").asInt());
                 .get("response")
                 .elements().
                 forEachRemaining(json->coaches.add(new Coach(json)));
+        return coaches;
+    }
+    //PlayerStatistic
+    public List<PlayerStatistic> getPlayerStatistic(String id,String team,String league,String season){
+        //Construction des parametres
+        Map<String,String> params=new HashMap<>();
+        if(season!=null) params.put("season",season);
+        if(league!=null) params.put("league",league);
+        if(team!=null) params.put("team",team);
+        if(id!=null) params.put("id",id);
+
+        List<PlayerStatistic> coaches=new ArrayList<>();
+        convertion.toJson(request("players",convertion.toString(params)))
+                .get("response")
+                .elements().
+                forEachRemaining(json->coaches.add(new PlayerStatistic(json)));
         return coaches;
     }
     //Leagues
