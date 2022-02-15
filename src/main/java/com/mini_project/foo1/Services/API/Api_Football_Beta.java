@@ -17,7 +17,10 @@ import java.util.Map;
 public class Api_Football_Beta {
 
     //Informations utiles que nous allons les utiliser dans nos appels
-    private final String key="ee61458eeemsh49db22f0a6b3aa8p146ab4jsn92d4b24bd4a0";//"ee61458eeemsh49db22f0a6b3aa8p146ab4jsn92d4b24bd4a0";//"5c68e4155bmshacdd4ece7352afep11f7cfjsn80d476d01f78";//"d560e412ffmsh2e521a76f1abf27p126933jsn18a435ec2b29";// ""7a993e4f8emshb10196fe71115b3p11e37bjsn7c10e43834bb"; //"ee61458eeemsh49db22f0a6b3aa8p146ab4jsn92d4b24bd4a0";
+   private final String key="d560e412ffmsh2e521a76f1abf27p126933jsn18a435ec2b29";
+    //"5c68e4155bmshacdd4ece7352afep11f7cfjsn80d476d01f78";//"d560e412ffmsh2e521a76f1abf27p126933jsn18a435ec2b29";// ""7a993e4f8emshb10196fe71115b3p11e37bjsn7c10e43834bb"; //"ee61458eeemsh49db22f0a6b3aa8p146ab4jsn92d4b24bd4a0";
+     //naimzeroab "f506d0c807msh552ad2ae43900d6p1fa805jsnb7cfc3b04537"
+    //naimmagnus "7a993e4f8emshb10196fe71115b3p11e37bjsn7c10e43834bb"
     private final String apiUrl="https://api-football-beta.p.rapidapi.com/";
     private final String host="api-football-beta.p.rapidapi.com";
     ///
@@ -27,6 +30,9 @@ public class Api_Football_Beta {
     //Elle fait l'appel vers l'api et retourne le resultat
     //Renvoie un type Map composé de l'headers et le body
     public String request(String endpoint, String param){
+
+
+
         //La construction de la requeste
         java.net.http.HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(apiUrl+endpoint+param))
@@ -44,8 +50,11 @@ public class Api_Football_Beta {
             e.printStackTrace();
             return null;
         } catch (InterruptedException e) {
+
             return null;
         }
+
+       System.out.println(Integer.parseInt(response.headers().map().get("x-ratelimit-requests-remaining").get(0)));
         return response.body();
     }
 

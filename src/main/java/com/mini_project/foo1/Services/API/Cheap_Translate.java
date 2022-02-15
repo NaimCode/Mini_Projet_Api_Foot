@@ -46,8 +46,11 @@ public class Cheap_Translate {
         }
 
         JsonNode body = convertion.toJson(response.body());
-        if (body.get("status").asInt() == 200)
-            return body.get("translatedText").asText();
+        if (body.get("status") != null)
+            if (body.get("status").asInt() == 200)
+                return body.get("translatedText").asText();
+            else
+                return mot;
         else
             return mot;
     }

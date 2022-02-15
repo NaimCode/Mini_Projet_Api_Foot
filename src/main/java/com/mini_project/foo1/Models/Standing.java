@@ -21,6 +21,7 @@ public class Standing {
     }
 
     public Standing(JsonNode json) {
+        if(json.get("league")!=null)
         this.league_v2 = new League_v2(json.get("league"));
 
         List<Standings_group> standinss=new ArrayList<>();

@@ -1,9 +1,11 @@
 package com.mini_project.foo1.Controllers;
 
+import com.mini_project.foo1.Foo1Application;
 import com.mini_project.foo1.Models.Country;
 import com.mini_project.foo1.Models.TextTraduit;
 import com.mini_project.foo1.Services.API.Api_Football_Beta;
 import com.mini_project.foo1.Services.API.Cheap_Translate;
+import com.mini_project.foo1.Services.API.Keys;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +33,7 @@ public class CountryController {
        for(int i=0; i<countries.size();i++){
            countries.get(i).setName(countriesTranlated[i]);
        }
+  System.out.println(code);
         return countries;
     }
 
